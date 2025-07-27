@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing Terraform...
+      - wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+      - unzip terraform_1.6.6_linux_amd64.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+      
+  pre_build:
+    commands:
+      - echo Extracting plan artifacts...
+      - cd $CODEBUILD_SRC_DIR_plan_output/terraform
+      - ls -la
+      
+  build:
+    commands:
+      - echo Applying Terraform plan...
+      - terraform apply -auto-approve tfplan
+      
+  post_build:
+    commands:
+      - echo Terraform apply completed on `date`
+      - echo Saving outputs...
+      - terraform output -json > outputs.json
+
+artifacts:
+  files:
+    - terraform/outputs.json
+  name: terraform-apply-$(date +%Y-%m-%d)

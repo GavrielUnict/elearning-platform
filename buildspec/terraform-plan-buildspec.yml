@@ -1,0 +1,47 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing Terraform...
+      - wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+      - unzip terraform_1.6.6_linux_amd64.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+      
+  pre_build:
+    commands:
+      - echo Initializing Terraform...
+      - cd terraform
+      - terraform init -backend=false
+      
+  build:
+    commands:
+      - echo Running Terraform plan...
+      - |
+        cat > terraform.tfvars << EOF
+        aws_region   = "us-east-1"
+        environment  = "$TF_VAR_environment"
+        project_name = "$TF_VAR_project_name"
+        
+        vpc_cidr             = "10.0.0.0/16"
+        public_subnet_cidrs  = ["10.0.1.0/24"]
+        private_subnet_cidrs = ["10.0.10.0/24"]
+        availability_zones   = ["us-east-1a"]
+        
+        admin_email = "$ADMIN_EMAIL"
+        EOF
+      - terraform plan -out=tfplan
+      - terraform show -no-color tfplan > tfplan.txt
+      
+  post_build:
+    commands:
+      - echo Terraform plan completed on `date`
+
+artifacts:
+  files:
+    - terraform/tfplan
+    - terraform/tfplan.txt
+    - terraform/.terraform/**/*
+    - terraform/.terraform.lock.hcl
+  name: terraform-plan-$(date +%Y-%m-%d)
