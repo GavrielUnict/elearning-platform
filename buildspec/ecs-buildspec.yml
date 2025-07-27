@@ -1,3 +1,4 @@
+# /elearning-platform/buildspec/ecs-buildspec.yml
 version: 0.2
 
 phases:
@@ -26,6 +27,7 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
+      - cp imagedefinitions.json $CODEBUILD_SRC_DIR/
 
 artifacts:
   files:

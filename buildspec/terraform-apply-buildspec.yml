@@ -1,19 +1,24 @@
+# /elearning-platform/buildspec/terraform-apply-buildspec.yml
 version: 0.2
 
 phases:
   install:
     commands:
       - echo Installing Terraform...
-      - wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+      - cd /tmp
+      - wget -q https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
       - unzip -o terraform_1.6.6_linux_amd64.zip
       - mv terraform /usr/local/bin/
+      - rm terraform_1.6.6_linux_amd64.zip
       - terraform --version
       
   pre_build:
     commands:
       - echo Extracting plan artifacts...
-      - cd $CODEBUILD_SRC_DIR_plan_output/terraform
+      - cd $CODEBUILD_SRC_DIR_plan_output
       - ls -la
+      - cd terraform
+      - terraform init -backend=false
       
   build:
     commands:

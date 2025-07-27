@@ -178,6 +178,37 @@ resource "aws_iam_role_policy" "codepipeline" {
       {
         Effect = "Allow"
         Action = [
+          "cloudformation:CreateStack",
+          "cloudformation:DeleteStack",
+          "cloudformation:DescribeStacks",
+          "cloudformation:UpdateStack",
+          "cloudformation:CreateChangeSet",
+          "cloudformation:DeleteChangeSet",
+          "cloudformation:DescribeChangeSet",
+          "cloudformation:ExecuteChangeSet",
+          "cloudformation:SetStackPolicy",
+          "cloudformation:ValidateTemplate",
+          "cloudformation:DescribeStackEvents",
+          "cloudformation:DescribeStackResources",
+          "cloudformation:GetTemplate"
+        ]
+        Resource = [
+          "arn:aws:cloudformation:*:*:stack/awseb-*",
+          "arn:aws:cloudformation:*:*:stack/eb-*"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "autoscaling:*",
+          "elasticloadbalancing:*",
+          "ec2:*"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "ecs:RegisterTaskDefinition",
           "ecs:UpdateService",
           "ecs:DescribeServices",
