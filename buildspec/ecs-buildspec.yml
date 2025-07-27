@@ -29,5 +29,5 @@ phases:
 
 artifacts:
   files:
-    - src/ecs-container/imagedefinitions.json
+    - imagedefinitions.json
   name: ecs-build-$(date +%Y-%m-%d)

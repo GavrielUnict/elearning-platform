@@ -117,25 +117,6 @@ resource "aws_codepipeline" "ecs" {
     }
   }
   
-  stage {
-    name = "Deploy"
-    
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "ECS"
-      version         = "1"
-      input_artifacts = ["build_output"]
-      
-      configuration = {
-        ClusterName = var.ecs_cluster_name
-        ServiceName = "quiz-processor-service"
-        FileName    = "imagedefinitions.json"
-      }
-    }
-  }
-  
   tags = {
     Name = "${var.project_name}-${var.environment}-ecs-pipeline"
   }
