@@ -170,7 +170,7 @@ const CourseView = () => {
               </List>
             )
           ) : (
-            // Document Mode - Show all documents
+            // Document Mode - Show all documents 
             documents.length === 0 ? (
               <Typography variant="body2" color="text.secondary" textAlign="center">
                 Nessun documento disponibile
