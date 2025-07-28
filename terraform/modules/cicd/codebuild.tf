@@ -197,7 +197,6 @@ resource "aws_codebuild_project" "terraform_apply" {
           - echo Extracting plan artifacts...
           - cd $CODEBUILD_SRC_DIR_plan_output
           - ls -la
-          - cd terraform
           - terraform init -backend=false
           
       build:
@@ -213,7 +212,7 @@ resource "aws_codebuild_project" "terraform_apply" {
 
     artifacts:
       files:
-        - terraform/outputs.json
+        - outputs.json
       name: terraform-apply-$(date +%Y-%m-%d)
     EOT
   }
