@@ -187,23 +187,20 @@ resource "aws_iam_role_policy" "codepipeline" {
       {
         Effect = "Allow"
         Action = [
-          "cloudformation:CreateStack",
-          "cloudformation:DeleteStack",
-          "cloudformation:DescribeStacks",
-          "cloudformation:UpdateStack",
-          "cloudformation:CreateChangeSet",
-          "cloudformation:DeleteChangeSet",
-          "cloudformation:DescribeChangeSet",
-          "cloudformation:ExecuteChangeSet",
-          "cloudformation:SetStackPolicy",
-          "cloudformation:ValidateTemplate",
-          "cloudformation:DescribeStackEvents",
-          "cloudformation:DescribeStackResources",
-          "cloudformation:GetTemplate"
+          "s3:GetObject",
+          "s3:GetObjectVersion",
+          "s3:ListBucket"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudformation:*"
         ]
         Resource = [
-          "arn:aws:cloudformation:*:*:stack/awseb-*",
-          "arn:aws:cloudformation:*:*:stack/eb-*"
+          "arn:aws:cloudformation:*:*:stack/awseb-*/*",
+          "arn:aws:cloudformation:*:*:stack/eb-*/*"
         ]
       },
       {
