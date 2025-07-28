@@ -149,6 +149,7 @@ resource "aws_codebuild_project" "terraform_plan" {
 }
 
 # CodeBuild Project - Terraform Apply
+# Trova il resource aws_codebuild_project.terraform_apply e sostituiscilo completamente con:
 resource "aws_codebuild_project" "terraform_apply" {
   name         = "${var.project_name}-${var.environment}-terraform-apply"
   description  = "Terraform apply for infrastructure changes"
@@ -176,8 +177,45 @@ resource "aws_codebuild_project" "terraform_apply" {
   }
   
   source {
-    type      = "CODEPIPELINE"
-    buildspec = "buildspec/terraform-apply-buildspec.yml"
+    type = "CODEPIPELINE"
+    buildspec = <<-EOT
+    version: 0.2
+
+    phases:
+      install:
+        commands:
+          - echo Installing Terraform...
+          - cd /tmp
+          - wget -q https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+          - unzip -o terraform_1.6.6_linux_amd64.zip
+          - mv terraform /usr/local/bin/
+          - rm terraform_1.6.6_linux_amd64.zip
+          - terraform --version
+          
+      pre_build:
+        commands:
+          - echo Extracting plan artifacts...
+          - cd $CODEBUILD_SRC_DIR_plan_output
+          - ls -la
+          - cd terraform
+          - terraform init -backend=false
+          
+      build:
+        commands:
+          - echo Applying Terraform plan...
+          - terraform apply -auto-approve tfplan
+          
+      post_build:
+        commands:
+          - echo Terraform apply completed on `date`
+          - echo Saving outputs...
+          - terraform output -json > outputs.json
+
+    artifacts:
+      files:
+        - terraform/outputs.json
+      name: terraform-apply-$(date +%Y-%m-%d)
+    EOT
   }
   
   logs_config {
