@@ -122,90 +122,90 @@ resource "aws_codepipeline" "ecs" {
   }
 }
 
-# CodePipeline - Infrastructure
-resource "aws_codepipeline" "infrastructure" {
-  name     = "${var.project_name}-${var.environment}-infrastructure-pipeline"
-  role_arn = aws_iam_role.codepipeline.arn
+# # CodePipeline - Infrastructure
+# resource "aws_codepipeline" "infrastructure" {
+#   name     = "${var.project_name}-${var.environment}-infrastructure-pipeline"
+#   role_arn = aws_iam_role.codepipeline.arn
   
-  artifact_store {
-    location = aws_s3_bucket.pipeline_artifacts.bucket
-    type     = "S3"
-  }
+#   artifact_store {
+#     location = aws_s3_bucket.pipeline_artifacts.bucket
+#     type     = "S3"
+#   }
   
-  stage {
-    name = "Source"
+#   stage {
+#     name = "Source"
     
-    action {
-      name             = "Source"
-      category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeStarSourceConnection"
-      version          = "1"
-      output_artifacts = ["source_output"]
+#     action {
+#       name             = "Source"
+#       category         = "Source"
+#       owner            = "AWS"
+#       provider         = "CodeStarSourceConnection"
+#       version          = "1"
+#       output_artifacts = ["source_output"]
       
-      configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github.arn
-        FullRepositoryId = var.github_repository
-        BranchName       = var.github_branch
-      }
-    }
-  }
+#       configuration = {
+#         ConnectionArn    = aws_codestarconnections_connection.github.arn
+#         FullRepositoryId = var.github_repository
+#         BranchName       = var.github_branch
+#       }
+#     }
+#   }
   
-  stage {
-    name = "Plan"
+#   stage {
+#     name = "Plan"
     
-    action {
-      name             = "TerraformPlan"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      version          = "1"
-      input_artifacts  = ["source_output"]
-      output_artifacts = ["plan_output"]
+#     action {
+#       name             = "TerraformPlan"
+#       category         = "Build"
+#       owner            = "AWS"
+#       provider         = "CodeBuild"
+#       version          = "1"
+#       input_artifacts  = ["source_output"]
+#       output_artifacts = ["plan_output"]
       
-      configuration = {
-        ProjectName = aws_codebuild_project.terraform_plan.name
-      }
-    }
-  }
+#       configuration = {
+#         ProjectName = aws_codebuild_project.terraform_plan.name
+#       }
+#     }
+#   }
   
-  stage {
-    name = "Approval"
+#   stage {
+#     name = "Approval"
     
-    action {
-      name     = "ManualApproval"
-      category = "Approval"
-      owner    = "AWS"
-      provider = "Manual"
-      version  = "1"
+#     action {
+#       name     = "ManualApproval"
+#       category = "Approval"
+#       owner    = "AWS"
+#       provider = "Manual"
+#       version  = "1"
       
-      configuration = {
-        NotificationArn = aws_sns_topic.pipeline_notifications.arn
-        CustomData      = "Please review the Terraform plan and approve the infrastructure changes"
-      }
-    }
-  }
+#       configuration = {
+#         NotificationArn = aws_sns_topic.pipeline_notifications.arn
+#         CustomData      = "Please review the Terraform plan and approve the infrastructure changes"
+#       }
+#     }
+#   }
   
-  stage {
-    name = "Apply"
+#   stage {
+#     name = "Apply"
     
-    action {
-      name            = "TerraformApply"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      version         = "1"
-      input_artifacts = ["source_output", "plan_output"]
-      output_artifacts = ["apply_output"]
+#     action {
+#       name            = "TerraformApply"
+#       category        = "Build"
+#       owner           = "AWS"
+#       provider        = "CodeBuild"
+#       version         = "1"
+#       input_artifacts = ["source_output", "plan_output"]
+#       output_artifacts = ["apply_output"]
       
-      configuration = {
-        ProjectName = aws_codebuild_project.terraform_apply.name
-        PrimarySource = "source_output"
-      }
-    }
-  }
+#       configuration = {
+#         ProjectName = aws_codebuild_project.terraform_apply.name
+#         PrimarySource = "source_output"
+#       }
+#     }
+#   }
   
-  tags = {
-    Name = "${var.project_name}-${var.environment}-infrastructure-pipeline"
-  }
-}
+#   tags = {
+#     Name = "${var.project_name}-${var.environment}-infrastructure-pipeline"
+#   }
+# }

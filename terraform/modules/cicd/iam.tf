@@ -145,9 +145,9 @@ resource "aws_iam_role_policy" "codepipeline" {
         ]
         Resource = [
           aws_codebuild_project.frontend.arn,
-          aws_codebuild_project.ecs.arn,
-          aws_codebuild_project.terraform_plan.arn,
-          aws_codebuild_project.terraform_apply.arn
+          aws_codebuild_project.ecs.arn
+          # aws_codebuild_project.terraform_plan.arn,
+          # aws_codebuild_project.terraform_apply.arn
         ]
       },
       {
@@ -240,19 +240,19 @@ resource "aws_iam_role_policy" "codepipeline" {
   })
 }
 
-# Additional policy for Terraform CodeBuild project
-resource "aws_iam_role_policy" "codebuild_terraform" {
-  name = "${var.project_name}-${var.environment}-codebuild-terraform-policy"
-  role = aws_iam_role.codebuild.id
+# # Additional policy for Terraform CodeBuild project
+# resource "aws_iam_role_policy" "codebuild_terraform" {
+#   name = "${var.project_name}-${var.environment}-codebuild-terraform-policy"
+#   role = aws_iam_role.codebuild.id
   
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = ["*"]
-        Resource = ["*"]
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Action = ["*"]
+#         Resource = ["*"]
+#       }
+#     ]
+#   })
+# }

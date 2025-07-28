@@ -69,7 +69,7 @@ resource "aws_cloudwatch_log_group" "codebuild_ecs" {
   retention_in_days = 7
 }
 
-resource "aws_cloudwatch_log_group" "codebuild_terraform" {
-  name              = "/aws/codebuild/${var.project_name}-${var.environment}-terraform-build"
-  retention_in_days = 7
-}
+# resource "aws_cloudwatch_log_group" "codebuild_terraform" {
+#   name              = "/aws/codebuild/${var.project_name}-${var.environment}-terraform-build"
+#   retention_in_days = 7
+# }

@@ -13,8 +13,8 @@ resource "aws_cloudwatch_event_rule" "pipeline_failure" {
       state = ["FAILED"]
       pipeline = [
         aws_codepipeline.frontend.name,
-        aws_codepipeline.ecs.name,
-        aws_codepipeline.infrastructure.name
+        aws_codepipeline.ecs.name
+        # aws_codepipeline.infrastructure.name
       ]
     }
   })

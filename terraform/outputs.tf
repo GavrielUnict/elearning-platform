@@ -97,7 +97,7 @@ output "cicd_details" {
     pipelines = {
       frontend       = module.cicd.frontend_pipeline_name
       ecs           = module.cicd.ecs_pipeline_name
-      infrastructure = module.cicd.infrastructure_pipeline_name
+      # infrastructure = module.cicd.infrastructure_pipeline_name
     }
   }
 }

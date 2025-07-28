@@ -18,10 +18,10 @@ output "ecs_pipeline_name" {
   value       = aws_codepipeline.ecs.name
 }
 
-output "infrastructure_pipeline_name" {
-  description = "Nome della pipeline infrastructure"
-  value       = aws_codepipeline.infrastructure.name
-}
+# output "infrastructure_pipeline_name" {
+#   description = "Nome della pipeline infrastructure"
+#   value       = aws_codepipeline.infrastructure.name
+# }
 
 output "pipeline_artifacts_bucket" {
   description = "Nome del bucket per artifacts delle pipeline"
