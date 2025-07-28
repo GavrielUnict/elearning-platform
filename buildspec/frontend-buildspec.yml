@@ -1,3 +1,4 @@
+# /elearning-platform/buildspec/frontend-buildspec.yml
 version: 0.2
 
 phases:
@@ -18,9 +19,6 @@ phases:
         REACT_APP_API_ENDPOINT=$REACT_APP_API_ENDPOINT
         EOF
       - npm run build
-      - echo Creating deployment package...
-      - rm -f deploy.zip
-      - zip -r deploy.zip Dockerfile Dockerrun.aws.json nginx.conf build/ package.json
       
   post_build:
     commands:
@@ -28,5 +26,6 @@ phases:
 
 artifacts:
   files:
-    - src/frontend/deploy.zip
+    - '**/*'
   name: frontend-build-$(date +%Y-%m-%d)
+  base-directory: src/frontend

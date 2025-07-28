@@ -195,10 +195,12 @@ resource "aws_codepipeline" "infrastructure" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      input_artifacts = ["plan_output"]
+      input_artifacts = ["source_output", "plan_output"]
+      output_artifacts = ["apply_output"]
       
       configuration = {
         ProjectName = aws_codebuild_project.terraform_apply.name
+        PrimarySource = "source_output"
       }
     }
   }
