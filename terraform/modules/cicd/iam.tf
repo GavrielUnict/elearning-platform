@@ -166,13 +166,22 @@ resource "aws_iam_role_policy" "codepipeline" {
         Effect = "Allow"
         Action = [
           "s3:CreateBucket",
+          "s3:DeleteBucket",
           "s3:ListBucket",
           "s3:GetBucketLocation",
           "s3:GetBucketPolicy",
-          "s3:PutBucketPolicy"
+          "s3:PutBucketPolicy",
+          "s3:GetObjectAcl",
+          "s3:PutObjectAcl",
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:GetBucketVersioning",
+          "s3:PutBucketVersioning"
         ]
         Resource = [
-          "arn:aws:s3:::elasticbeanstalk-*"
+          "arn:aws:s3:::elasticbeanstalk-*",
+          "arn:aws:s3:::elasticbeanstalk-*/*"
         ]
       },
       {

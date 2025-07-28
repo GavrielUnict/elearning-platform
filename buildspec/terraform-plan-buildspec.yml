@@ -33,6 +33,7 @@ phases:
         availability_zones   = ["us-east-1a"]
         
         admin_email = "$ADMIN_EMAIL"
+        github_repository = "GavrielUnict/elearning-platform"
         EOF
       - terraform plan -out=tfplan
       - terraform show -no-color tfplan > tfplan.txt
