@@ -1,4 +1,6 @@
-FROM python:3.11-slim
+# FROM python:3.11-slim # con questo stavo raggiungendo il limite di pull di Docker Hub senza autenticazione
+
+FROM public.ecr.aws/docker/library/python:3.11-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
