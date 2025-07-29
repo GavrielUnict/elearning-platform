@@ -15,7 +15,7 @@ if ! command -v eb &> /dev/null; then
     exit 1
 fi
 
-# Check if .env file exists
+# Check if .env file exists 
 if [ ! -f ".env.production" ]; then
     echo -e "${RED}.env file not found!${NC}"
     echo "Please copy .env.example to .env and configure it:"
