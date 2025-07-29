@@ -62,5 +62,10 @@ deployment-package.zip
 terraform/.terraform.tfstate*
 terraform/.terraform.lock.hcl.backup
 
-
+# Other
 setup-cicd-github.sh
+test-cognito.sh
+ScriptDiSupporto.sh
+GUIDA_CICD_COMPLETA.md
+deploy-all.sh
+check-pipelines.sh

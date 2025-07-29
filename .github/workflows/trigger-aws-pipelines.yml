@@ -3,10 +3,9 @@ name: Trigger AWS CodePipeline
 on:
   push:
     branches: [ main ]
-    # paths-ignore:
-    #   - '**.md'
-    #   - '.github/**'
-    #   - 'docs/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
 
 jobs:
   trigger-pipelines:
