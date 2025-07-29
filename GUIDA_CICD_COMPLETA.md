@@ -270,4 +270,4 @@ Il tuo CI/CD è ora completamente operativo! Ogni push su `main` attiverà autom
 - Approvare manualmente i cambi infrastrutturali
 - Controllare i costi regolarmente
 
-Happy deploying! 🚀
+Happy deploying! 🚀 
