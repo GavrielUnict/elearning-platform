@@ -1,0 +1,40 @@
+name: Trigger ECS Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      # ECS container source files
+      - 'src/ecs-container/**'
+      # ECS build configuration
+      - 'buildspec/ecs-buildspec.yml'
+      # ECS infrastructure
+      - 'terraform/modules/compute_ecs/**'
+      # Lambda orchestrator changes
+      - 'src/lambda/**'
+      # Storage changes that affect processing
+      - 'terraform/modules/storage/**'
+      # Messaging changes (SQS/SNS)
+      - 'terraform/modules/messaging/**'
+      # Python dependencies
+      - 'requirements.txt'
+
+jobs:
+  trigger-ecs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Trigger ECS Pipeline
+      run: |
+        echo "🐳 ECS files changed - Triggering ECS Pipeline..."
+        aws codepipeline start-pipeline-execution \
+          --name elearning-dev-ecs-pipeline \
+          --region us-east-1
+        echo "✅ ECS Pipeline triggered successfully!"

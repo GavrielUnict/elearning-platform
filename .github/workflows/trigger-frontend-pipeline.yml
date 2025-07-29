@@ -1,0 +1,43 @@
+name: Trigger Frontend Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      # Frontend source files
+      - 'src/frontend/**'
+      # Frontend build configuration
+      - 'buildspec/frontend-buildspec.yml'
+      # Elastic Beanstalk configuration
+      - 'terraform/modules/elastic_beanstalk/**'
+      # Package files that affect frontend
+      - 'package.json'
+      - 'package-lock.json'
+      # Frontend deployment files
+      - 'Dockerfile'
+      - 'nginx.conf'
+      - 'Dockerrun.aws.json'
+      # API changes that affect frontend
+      - 'terraform/modules/compute/**'
+      # Cognito changes (auth)
+      - 'terraform/modules/cognito/**'
+
+jobs:
+  trigger-frontend:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Trigger Frontend Pipeline
+      run: |
+        echo "🚀 Frontend files changed - Triggering Frontend Pipeline..."
+        aws codepipeline start-pipeline-execution \
+          --name elearning-dev-frontend-pipeline \
+          --region us-east-1
+        echo "✅ Frontend Pipeline triggered successfully!"
