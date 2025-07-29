@@ -10,14 +10,10 @@ on:
       - 'buildspec/ecs-buildspec.yml'
       # ECS infrastructure
       - 'terraform/modules/compute_ecs/**'
-      # Lambda orchestrator changes
-      - 'src/lambda/**'
       # Storage changes that affect processing
       - 'terraform/modules/storage/**'
       # Messaging changes (SQS/SNS)
       - 'terraform/modules/messaging/**'
-      # Python dependencies
-      - 'requirements.txt'
 
 jobs:
   trigger-ecs:

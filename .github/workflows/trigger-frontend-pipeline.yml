@@ -10,17 +10,12 @@ on:
       - 'buildspec/frontend-buildspec.yml'
       # Elastic Beanstalk configuration
       - 'terraform/modules/elastic_beanstalk/**'
-      # Package files that affect frontend
-      - 'package.json'
-      - 'package-lock.json'
-      # Frontend deployment files
-      - 'Dockerfile'
-      - 'nginx.conf'
-      - 'Dockerrun.aws.json'
       # API changes that affect frontend
       - 'terraform/modules/compute/**'
       # Cognito changes (auth)
       - 'terraform/modules/cognito/**'
+      # DynamoDB tables used by frontend
+      - 'terraform/modules/storage/**'
 
 jobs:
   trigger-frontend:
