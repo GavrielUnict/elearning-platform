@@ -7,7 +7,7 @@ set -e
 # Ottieni i dettagli da Terraform
 # cd ../../terraform
 # ECR_URL=$(terraform output -raw ecr_repository_url 2>/dev/null || echo "")
-# cd ../src/ecs-container
+# cd ../src/ecs-container 
 
 ECR_URL="323395044516.dkr.ecr.us-east-1.amazonaws.com/elearning-dev-quiz-processor"
 
