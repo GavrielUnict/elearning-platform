@@ -190,8 +190,12 @@ const ResultsHistory = () => {
                         secondary={
                           <Box sx={{ mt: 1 }}>
                             <Typography variant="body2">
-                              La tua risposta: {question.studentAnswer !== null ? 
-                                `Opzione ${question.studentAnswer + 1}` : 'Non risposto'}
+                              La tua risposta: {
+                                question.studentAnswer !== null && 
+                                question.studentAnswer !== undefined ? 
+                                  `Opzione ${question.studentAnswer + 1}` : 
+                                  'Non risposto'
+                              }
                             </Typography>
                             <Typography variant="body2" color="success.main">
                               Risposta corretta: Opzione {question.correctAnswer + 1}
