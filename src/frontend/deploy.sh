@@ -43,7 +43,7 @@ zip -r deploy.zip Dockerfile Dockerrun.aws.json nginx.conf build/ package.json -
 
 # Check if environment exists
 # if ! eb list | grep -q "elearning-dev"; then
-#     echo -e "${YELLOW}Creating new Elastic Beanstalk environment...${NC}"
+#     echo -e "${YELLOW}Creating new Elastic Beanstalk environment...${NC}" 
 #     eb create elearning-dev --instance-type t3.medium --envvars $(cat .env | grep -v '^#' | xargs | tr ' ' ',')
 # else
 #     echo -e "${YELLOW}Deploying to existing environment...${NC}"

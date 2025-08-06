@@ -16,7 +16,7 @@ if [ -z "$ECR_URL" ]; then
     exit 1
 fi
 
-# Extract region and registry from ECR URL 
+# Extract region and registry from ECR URL
 REGION=$(echo $ECR_URL | cut -d'.' -f4)
 REGISTRY=$(echo $ECR_URL | cut -d'/' -f1)
 
